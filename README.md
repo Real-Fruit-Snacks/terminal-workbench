@@ -54,11 +54,11 @@ Terminal Workbench builds on Obsidian's own settings rather than replacing them:
 Terminal Workbench includes settings for the [Style Settings](https://github.com/mgmeyers/obsidian-style-settings) community plugin:
 
 - Primary, secondary, and warm accent colors, configurable separately for light and dark mode
-- Editor, UI, and code fonts
-- Editor line width and UI corner radius
-- Compact workspace mode
-- Soft neon highlights
-- Active-line terminal prompt marker
+- Editor, UI, and code fonts, editor line width, UI corner radius, and text line height
+- Colored folders by nesting depth (four configurable levels) and a file name color
+- Compact workspace mode, soft neon highlights, and an active-line terminal prompt marker
+- Tag shape (square or pill)
+- Toggles to simplify individual features: neutral heading colors, hidden heading underline rules, hidden active-line highlight, hidden blockquote marker, plain code block headers, plain tab titles and breadcrumb, neutral task states, and stock Mermaid diagrams
 
 Suggested fonts (the theme falls back to system fonts without them):
 

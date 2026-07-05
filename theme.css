@@ -81,6 +81,130 @@ settings:
     title: Code font
     type: variable-text
     default: '"Berkeley Mono", "JetBrains Mono", "Cascadia Code", "IBM Plex Mono", "SFMono-Regular", Consolas, monospace'
+  - id: ta-explorer
+    title: File explorer
+    type: heading
+    level: 1
+  - id: ta-colored-folders
+    title: Colored folders
+    description: Colors folder names by nesting depth using the four folder colors below (first four levels).
+    type: class-toggle
+    default: false
+  - id: ta-folder-1
+    title: Folder color (level 1)
+    type: variable-themed-color
+    format: hex
+    default-light: '#007a4d'
+    default-dark: '#63f2ab'
+  - id: ta-folder-2
+    title: Folder color (level 2)
+    type: variable-themed-color
+    format: hex
+    default-light: '#006f9e'
+    default-dark: '#6bdcff'
+  - id: ta-folder-3
+    title: Folder color (level 3)
+    type: variable-themed-color
+    format: hex
+    default-light: '#a46600'
+    default-dark: '#f0c674'
+  - id: ta-folder-4
+    title: Folder color (level 4)
+    type: variable-themed-color
+    format: hex
+    default-light: '#7357b8'
+    default-dark: '#b78cff'
+  - id: ta-file-color
+    title: File name color
+    type: variable-themed-color
+    format: hex
+    default-light: '#60706a'
+    default-dark: '#879994'
+  - id: ta-headings
+    title: Headings
+    type: heading
+    level: 1
+  - id: ta-plain-headings
+    title: Neutral heading colors
+    description: Uses the normal text color for H2-H4 instead of the accent colors.
+    type: class-toggle
+    default: false
+  - id: ta-no-heading-rules
+    title: Hide heading underline rules
+    description: Removes the fading rule below H1 and H2.
+    type: class-toggle
+    default: false
+  - id: ta-editor
+    title: Editor
+    type: heading
+    level: 1
+  - id: ta-no-active-line
+    title: Hide active line highlight
+    description: Removes the tinted background and accent bar on the active editor line.
+    type: class-toggle
+    default: false
+  - id: ta-no-blockquote-glyph
+    title: Hide blockquote marker
+    description: Removes the ">" glyph at the start of blockquotes.
+    type: class-toggle
+    default: false
+  - id: line-height-normal
+    title: Text line height
+    type: variable-number-slider
+    default: 1.7
+    min: 1.4
+    max: 1.9
+    step: 0.05
+  - id: ta-code-blocks
+    title: Code blocks
+    type: heading
+    level: 1
+  - id: ta-plain-code-header
+    title: Hide code block header band
+    description: Removes the header strip and glyph, leaving a plain framed block.
+    type: class-toggle
+    default: false
+  - id: ta-chrome
+    title: Workspace chrome
+    type: heading
+    level: 1
+  - id: ta-plain-tabs
+    title: Plain tab titles
+    description: Interface font tab titles instead of uppercase monospace.
+    type: class-toggle
+    default: false
+  - id: ta-plain-breadcrumb
+    title: Plain breadcrumb
+    description: Interface font note path instead of the monospace shell style.
+    type: class-toggle
+    default: false
+  - id: ta-tasks-tags
+    title: Tasks and tags
+    type: heading
+    level: 1
+  - id: ta-plain-tasks
+    title: Neutral task states
+    description: Cancelled, deferred, and important tasks use the standard checkbox color.
+    type: class-toggle
+    default: false
+  - id: tag-radius
+    title: Tag shape
+    type: variable-select
+    default: '4px'
+    options:
+      - label: Square
+        value: '4px'
+      - label: Pill
+        value: '999px'
+  - id: ta-mermaid
+    title: Mermaid
+    type: heading
+    level: 1
+  - id: ta-plain-mermaid
+    title: Stock Mermaid diagrams
+    description: Disables the theme's diagram styling and uses Obsidian's defaults.
+    type: class-toggle
+    default: false
 
 */
 
@@ -91,6 +215,11 @@ body {
   --ta-red: #ff6e7a;
   --ta-orange: #f7a35c;
   --ta-violet: #b78cff;
+  --ta-folder-1: var(--ta-accent);
+  --ta-folder-2: var(--ta-accent-alt);
+  --ta-folder-3: var(--ta-warm);
+  --ta-folder-4: var(--ta-violet);
+  --ta-file-color: var(--nav-item-color);
   --ta-font-editor: "Berkeley Mono", "JetBrains Mono", "Cascadia Code", "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
   --ta-font-ui: "Inter", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
   --ta-font-code: "Berkeley Mono", "JetBrains Mono", "Cascadia Code", "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
@@ -655,6 +784,10 @@ body:not(.is-mobile) {
 .tree-item-inner {
   font-family: var(--font-interface);
   font-size: 12.5px;
+}
+
+.nav-file-title {
+  color: var(--ta-file-color);
 }
 
 .nav-folder.mod-root > .nav-folder-title,
@@ -1315,7 +1448,7 @@ input[type="checkbox"]:checked {
   font-family: var(--font-monospace);
 }
 
-.mermaid {
+body:not(.ta-plain-mermaid) .mermaid {
   display: flex;
   justify-content: center;
   margin: 1.2em 0;
@@ -1325,7 +1458,7 @@ input[type="checkbox"]:checked {
   background: color-mix(in srgb, var(--ta-accent-alt) 4%, var(--background-primary));
 }
 
-.mermaid svg {
+body:not(.ta-plain-mermaid) .mermaid svg {
   max-width: 100%;
   height: auto;
 }
@@ -1334,7 +1467,7 @@ input[type="checkbox"]:checked {
    which would flip the palette below. Disable the filter only for diagram
    types this theme fully restyles; pie, gantt, and other types keep the
    invert treatment that makes their stock colors dark-friendly. */
-body.theme-dark .mermaid > svg:is(
+body.theme-dark:not(.ta-plain-mermaid) .mermaid > svg:is(
   [aria-roledescription="flowchart-v2"],
   [aria-roledescription="flowchart"],
   [aria-roledescription="stateDiagram"],
@@ -1347,7 +1480,7 @@ body.theme-dark .mermaid > svg:is(
 
 /* Readability net for diagram text this theme does not explicitly style,
    in the unfiltered diagram types above. */
-body.theme-dark .mermaid > svg:is(
+body.theme-dark:not(.ta-plain-mermaid) .mermaid > svg:is(
   [aria-roledescription="flowchart-v2"],
   [aria-roledescription="flowchart"],
   [aria-roledescription="stateDiagram"],
@@ -1362,79 +1495,79 @@ body.theme-dark .mermaid > svg:is(
    recoloring diagram parts cannot win without !important. Selectors are
    scoped to flowchart/state/sequence part classes to leave pie, gantt,
    and other chart types untouched. */
-.mermaid .node rect,
-.mermaid .node circle,
-.mermaid .node ellipse,
-.mermaid .node polygon,
-.mermaid .node path {
+body:not(.ta-plain-mermaid) .mermaid .node rect,
+body:not(.ta-plain-mermaid) .mermaid .node circle,
+body:not(.ta-plain-mermaid) .mermaid .node ellipse,
+body:not(.ta-plain-mermaid) .mermaid .node polygon,
+body:not(.ta-plain-mermaid) .mermaid .node path {
   fill: var(--ta-mermaid-node-bg) !important;
   stroke: var(--ta-mermaid-node-border) !important;
   stroke-width: 1.4px !important;
 }
 
-.mermaid .cluster rect {
+body:not(.ta-plain-mermaid) .mermaid .cluster rect {
   fill: var(--ta-mermaid-cluster-bg) !important;
   stroke: var(--ta-mermaid-edge) !important;
 }
 
-.mermaid .nodeLabel,
-.mermaid .nodeLabel p,
-.mermaid .cluster-label span,
-.mermaid .node text,
-.mermaid .label text {
+body:not(.ta-plain-mermaid) .mermaid .nodeLabel,
+body:not(.ta-plain-mermaid) .mermaid .nodeLabel p,
+body:not(.ta-plain-mermaid) .mermaid .cluster-label span,
+body:not(.ta-plain-mermaid) .mermaid .node text,
+body:not(.ta-plain-mermaid) .mermaid .label text {
   color: var(--text-normal) !important;
   fill: var(--text-normal) !important;
   background-color: transparent !important;
 }
 
-.mermaid .edgeLabel,
-.mermaid .edgeLabel p,
-.mermaid rect.labelBkg {
+body:not(.ta-plain-mermaid) .mermaid .edgeLabel,
+body:not(.ta-plain-mermaid) .mermaid .edgeLabel p,
+body:not(.ta-plain-mermaid) .mermaid rect.labelBkg {
   color: var(--text-soft) !important;
   fill: var(--ta-mermaid-cluster-bg) !important;
   background-color: var(--ta-mermaid-cluster-bg) !important;
 }
 
-.mermaid .edgePath .path,
-.mermaid .flowchart-link,
-.mermaid .transition {
+body:not(.ta-plain-mermaid) .mermaid .edgePath .path,
+body:not(.ta-plain-mermaid) .mermaid .flowchart-link,
+body:not(.ta-plain-mermaid) .mermaid .transition {
   stroke: var(--ta-mermaid-edge) !important;
 }
 
-.mermaid .marker,
-.mermaid .arrowheadPath {
+body:not(.ta-plain-mermaid) .mermaid .marker,
+body:not(.ta-plain-mermaid) .mermaid .arrowheadPath {
   fill: var(--ta-accent) !important;
   stroke: var(--ta-accent) !important;
 }
 
-.mermaid .actor {
+body:not(.ta-plain-mermaid) .mermaid .actor {
   fill: var(--ta-mermaid-node-bg) !important;
   stroke: var(--ta-mermaid-node-border) !important;
 }
 
-.mermaid text.actor > tspan {
+body:not(.ta-plain-mermaid) .mermaid text.actor > tspan {
   fill: var(--text-normal) !important;
 }
 
-.mermaid .messageLine0,
-.mermaid .messageLine1,
-.mermaid .loopLine {
+body:not(.ta-plain-mermaid) .mermaid .messageLine0,
+body:not(.ta-plain-mermaid) .mermaid .messageLine1,
+body:not(.ta-plain-mermaid) .mermaid .loopLine {
   stroke: var(--ta-mermaid-edge) !important;
 }
 
-.mermaid .messageText,
-.mermaid .loopText,
-.mermaid .loopText > tspan {
+body:not(.ta-plain-mermaid) .mermaid .messageText,
+body:not(.ta-plain-mermaid) .mermaid .loopText,
+body:not(.ta-plain-mermaid) .mermaid .loopText > tspan {
   fill: var(--text-soft) !important;
 }
 
-.mermaid .labelBox {
+body:not(.ta-plain-mermaid) .mermaid .labelBox {
   fill: var(--ta-mermaid-cluster-bg) !important;
   stroke: var(--ta-mermaid-node-border) !important;
 }
 
-.mermaid .labelText,
-.mermaid .labelText > tspan {
+body:not(.ta-plain-mermaid) .mermaid .labelText,
+body:not(.ta-plain-mermaid) .mermaid .labelText > tspan {
   fill: var(--text-normal) !important;
 }
 
@@ -1649,6 +1782,92 @@ body.ta-soft-neon .nav-file-title.is-active,
 body.ta-soft-neon .nav-folder-title.is-active,
 body.ta-soft-neon .tree-item-self.is-active {
   box-shadow: inset 2px 0 0 var(--ta-accent), var(--ta-glow);
+}
+
+body.ta-colored-folders .nav-folder.mod-root > .nav-folder-children > .nav-folder > .nav-folder-title {
+  color: var(--ta-folder-1);
+}
+
+body.ta-colored-folders .nav-folder.mod-root > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-title {
+  color: var(--ta-folder-2);
+}
+
+body.ta-colored-folders .nav-folder.mod-root > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-title {
+  color: var(--ta-folder-3);
+}
+
+body.ta-colored-folders .nav-folder.mod-root > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-title {
+  color: var(--ta-folder-4);
+}
+
+body.ta-plain-headings .markdown-rendered h2,
+body.ta-plain-headings .HyperMD-header-2,
+body.ta-plain-headings .cm-header-2,
+body.ta-plain-headings .markdown-rendered h3,
+body.ta-plain-headings .HyperMD-header-3,
+body.ta-plain-headings .cm-header-3,
+body.ta-plain-headings .markdown-rendered h4,
+body.ta-plain-headings .HyperMD-header-4,
+body.ta-plain-headings .cm-header-4 {
+  color: var(--text-normal);
+}
+
+body.ta-no-heading-rules .markdown-rendered h1::after,
+body.ta-no-heading-rules .markdown-rendered h2::after {
+  content: none;
+}
+
+body.ta-no-active-line .markdown-source-view.mod-cm6 .cm-line.cm-active {
+  background: transparent;
+  box-shadow: none;
+}
+
+body.ta-no-blockquote-glyph .markdown-rendered blockquote::before {
+  content: none;
+}
+
+body.ta-plain-code-header .markdown-rendered pre::before {
+  content: none;
+}
+
+body.ta-plain-code-header .cm-line.HyperMD-codeblock-begin {
+  background: var(--code-background);
+  border-bottom: 0;
+}
+
+body.ta-plain-tabs .workspace-tab-header-inner-title {
+  font-family: var(--font-interface);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+body.ta-plain-tabs .workspace-tabs.mod-top .workspace-tab-header.is-active,
+body.ta-plain-tabs .workspace-tabs.mod-top .workspace-tab-header.is-active .workspace-tab-header-inner-title {
+  color: var(--text-normal);
+}
+
+body.ta-plain-breadcrumb .view-header-title,
+body.ta-plain-breadcrumb .view-header-title-parent,
+body.ta-plain-breadcrumb .view-header-breadcrumb {
+  font-family: var(--font-interface);
+  font-size: 12px;
+}
+
+body.ta-plain-tasks .markdown-rendered .task-list-item[data-task="-"],
+body.ta-plain-tasks .cm-line.HyperMD-task-line[data-task="-"],
+body.ta-plain-tasks .markdown-rendered .task-list-item[data-task=">"],
+body.ta-plain-tasks .cm-line.HyperMD-task-line[data-task=">"],
+body.ta-plain-tasks .markdown-rendered .task-list-item[data-task="!"],
+body.ta-plain-tasks .cm-line.HyperMD-task-line[data-task="!"] {
+  --checkbox-color: var(--ta-accent);
+  --checkbox-color-hover: var(--ta-accent);
+  --checkbox-border-color: var(--background-modifier-border-hover);
+  --checkbox-border-color-hover: var(--background-modifier-border-hover);
+  color: var(--text-faint);
+  font-weight: inherit;
+  text-decoration-color: var(--text-faint);
 }
 
 @media (prefers-reduced-motion: no-preference) {
