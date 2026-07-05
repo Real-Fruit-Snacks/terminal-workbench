@@ -1257,7 +1257,7 @@ input[type="checkbox"]:checked {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: start;
-  column-gap: 0.7em;
+  gap: 0 0.7em;
   margin: 0.45em 0;
   color: var(--text-muted);
 }
@@ -1572,7 +1572,6 @@ body.theme-dark .mermaid > svg:is(
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--text-faint);
   background: color-mix(in srgb, var(--text-faint) 46%, transparent);
   border: 3px solid transparent;
   border-radius: 999px;
@@ -1580,7 +1579,6 @@ body.theme-dark .mermaid > svg:is(
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
   background: color-mix(in srgb, var(--text-muted) 58%, transparent);
   border: 2px solid transparent;
   background-clip: padding-box;
@@ -1707,5 +1705,13 @@ body.ta-soft-neon .tree-item-self.is-active {
 
   body.ta-soft-neon.theme-light {
     --ta-glow: 0 0 14px rgba(0, 122, 77, 0.16);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--text-faint);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
   }
 }
