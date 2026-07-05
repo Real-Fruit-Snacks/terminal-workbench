@@ -8,6 +8,8 @@ A modern terminal-inspired theme for [Obsidian](https://obsidian.md), built for 
 
 The design goal is not retro green-on-black nostalgia. It is a calm, dense, high-contrast working surface: graphite backgrounds, crisp typography, restrained ANSI-style accents, readable code, and pane chrome that feels close to a modern terminal without turning your notes into a novelty skin.
 
+![Terminal Workbench in dark mode](screenshot.png)
+
 **[View the live showcase](https://real-fruit-snacks.github.io/terminal-workbench/)** for both modes, the full palette, and feature details.
 
 ## Highlights
@@ -74,6 +76,7 @@ The theme uses `color-mix()` for derived tints, supported by every desktop build
 | `theme.css` | The theme |
 | `manifest.json` | Theme metadata |
 | `versions.json` | Release compatibility map |
+| `screenshot.png` | Community-store thumbnail |
 | `docs/index.html` | Showcase page (GitHub Pages) |
 | `docs/THEME-SPEC.md` | Portable design specification for reusing this visual system elsewhere |
 | `.github/workflows/release.yml` | Creates a GitHub release with `manifest.json` and `theme.css` when a version tag is pushed |
