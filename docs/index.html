@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terminal Workbench — an Obsidian theme</title>
+  <meta name="description" content="A modern terminal-inspired Obsidian theme: graphite backgrounds, crisp typography, restrained ANSI-style accents, and readable code in dark and light modes.">
+  <style>
+    :root[data-theme="dark"] {
+      --bg-0: #090c0d; --bg-1: #0e1214; --bg-2: #13191c; --bg-3: #182024;
+      --border: #2a363d; --border-strong: #39484f;
+      --text: #dce4df; --text-soft: #b4c3bd; --muted: #879994; --faint: #63736f;
+      --accent: #63f2ab; --accent-alt: #6bdcff; --warm: #f0c674; --red: #ff6e7a;
+      --violet: #b78cff; --orange: #f7a35c;
+      --on-accent: #07100d; --code-bg: #0f1517; --code-header: #0c1113;
+      color-scheme: dark;
+    }
+    :root[data-theme="light"] {
+      --bg-0: #f5f7f4; --bg-1: #edf2ee; --bg-2: #e2eae5; --bg-3: #d6e1db;
+      --border: #bfcbc5; --border-strong: #9daea7;
+      --text: #17201d; --text-soft: #34443f; --muted: #60706a; --faint: #81918a;
+      --accent: #007a4d; --accent-alt: #006f9e; --warm: #a46600; --red: #c8324c;
+      --violet: #7357b8; --orange: #b65800;
+      --on-accent: #f9fbf8; --code-bg: #e2eae5; --code-header: #d6e1db;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      background: var(--bg-0);
+      color: var(--text);
+      font-family: "Inter", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .mono { font-family: "Berkeley Mono", "JetBrains Mono", "Cascadia Code", "IBM Plex Mono", "SFMono-Regular", Consolas, monospace; }
+    .label {
+      font-family: "Berkeley Mono", "JetBrains Mono", "Cascadia Code", "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    a { color: var(--accent-alt); text-decoration: none; }
+    a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--bg-1); border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner { display: flex; align-items: center; justify-content: space-between; height: 46px; }
+    .topbar .label { color: var(--accent); }
+    .topbar-links { display: flex; align-items: center; gap: 18px; }
+    .topbar-links a { color: var(--muted); font-size: 13px; }
+    .topbar-links a:hover { color: var(--text); text-decoration: none; }
+    .toggle {
+      font: inherit; font-size: 12px; cursor: pointer;
+      background: var(--bg-2); color: var(--text-soft);
+      border: 1px solid var(--border); border-radius: 6px; padding: 4px 12px;
+    }
+    .toggle:hover { border-color: var(--border-strong); color: var(--text); }
+
+    .hero { padding: 72px 0 40px; }
+    .hero h1 {
+      font-family: "Berkeley Mono", "JetBrains Mono", "Cascadia Code", "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 40px; font-weight: 760; line-height: 1.15; margin: 0 0 4px;
+    }
+    .hero h1 .prompt { color: var(--accent); }
+    .hero p.tagline { color: var(--text-soft); max-width: 620px; margin: 14px 0 26px; }
+    .btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 9px 18px; border-radius: 6px;
+      font-size: 13.5px; font-weight: 650; border: 1px solid var(--border);
+    }
+    .btn-primary { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+    .btn-primary:hover { text-decoration: none; filter: brightness(1.08); }
+    .btn-quiet { color: var(--text-soft); background: var(--bg-1); }
+    .btn-quiet:hover { text-decoration: none; color: var(--text); border-color: var(--border-strong); }
+
+    .window {
+      margin: 28px 0 0; border: 1px solid var(--border); border-radius: 8px;
+      background: var(--bg-0); overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+    }
+    .tabbar {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--bg-1); border-bottom: 1px solid var(--border); padding: 5px 10px;
+    }
+    .tabs { display: flex; align-items: center; gap: 4px; }
+    .tab {
+      padding: 5px 12px; border-radius: 4px;
+      font-family: "Berkeley Mono", "JetBrains Mono", Consolas, monospace;
+      font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .tab.active { background: var(--bg-3); color: var(--accent); }
+    .tab-plus { color: var(--faint); font-size: 14px; padding: 0 8px; }
+    .crumbrow {
+      display: flex; align-items: center; justify-content: center;
+      padding: 8px 12px; border-bottom: 1px solid var(--border);
+      font-family: "Berkeley Mono", "JetBrains Mono", Consolas, monospace; font-size: 11.5px; color: var(--muted);
+    }
+    .crumbrow .sep { color: var(--faint); padding: 0 6px; }
+    .crumbrow .here { color: var(--text); }
+    .page { padding: 30px 36px 40px; }
+    .page h2.h1 { font-family: inherit; font-size: 24px; font-weight: 760; margin: 0 0 10px; }
+    .page .h2 { color: var(--accent); font-size: 18px; font-weight: 740; margin: 26px 0 8px; }
+    .page .h2::after { content: ""; display: block; height: 1px; margin-top: 6px;
+      background: linear-gradient(90deg, color-mix(in srgb, currentColor 42%, transparent), transparent); }
+    .page p { margin: 10px 0; color: var(--text); }
+    .tag {
+      display: inline-block; padding: 2px 10px; border-radius: 4px;
+      background: color-mix(in srgb, var(--accent) 13%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+      color: var(--accent); font-size: 11.5px; font-weight: 650;
+    }
+    .quote {
+      border-left: 2px solid var(--accent);
+      background: color-mix(in srgb, var(--accent) 7%, transparent);
+      border-radius: 0 4px 4px 0; padding: 10px 16px; margin: 14px 0; color: var(--text-soft);
+    }
+    .quote::before { content: ">"; color: var(--accent); font-family: Consolas, monospace; font-weight: 700; margin-right: 8px; }
+    .codeblock { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin: 14px 0; background: var(--code-bg); }
+    .codehead {
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--code-header); border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+      padding: 5px 12px;
+    }
+    .codehead .glyph { font-family: Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.09em; color: var(--faint); }
+    .codebody { padding: 13px 16px; font-family: "Berkeley Mono", "JetBrains Mono", Consolas, monospace; font-size: 12.5px; line-height: 1.65; overflow-x: auto; }
+    .codebody .kw { color: var(--violet); } .codebody .fn { color: var(--accent-alt); }
+    .codebody .str { color: var(--accent); } .codebody .pn { color: var(--muted); }
+    .codebody .pr { color: var(--warm); } .codebody .vl { color: var(--orange); }
+    .tasks { list-style: none; padding: 0; margin: 10px 0; }
+    .tasks li { display: flex; align-items: center; gap: 10px; padding: 3px 0; }
+    .box { width: 15px; height: 15px; border-radius: 4px; border: 1px solid var(--border-strong); display: inline-block; flex: none; }
+    .box.done { background: var(--accent); border-color: var(--accent); }
+    .box.cancel { background: var(--red); border-color: var(--red); }
+    .box.defer { background: var(--accent-alt); border-color: var(--accent-alt); }
+    .box.imp { background: var(--warm); border-color: var(--warm); }
+    .strike { text-decoration: line-through; color: var(--faint); }
+
+    section.block { padding: 48px 0 8px; }
+    section.block > .label { display: block; padding-bottom: 8px; border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent); margin-bottom: 22px; }
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+    .swatch { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: var(--bg-1); }
+    .swatch .chip { height: 52px; }
+    .swatch .meta { padding: 8px 10px; }
+    .swatch .name { font-size: 12px; font-weight: 650; color: var(--text-soft); }
+    .swatch .hex { font-family: Consolas, monospace; font-size: 11px; color: var(--muted); }
+    .features { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+    .feature { border: 1px solid var(--border); border-radius: 6px; background: var(--bg-1); padding: 16px 18px; }
+    .feature .name { font-size: 13.5px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .feature p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6; }
+    ol.steps { color: var(--text-soft); font-size: 14px; padding-left: 20px; }
+    ol.steps code { font-family: Consolas, monospace; font-size: 0.92em; background: var(--bg-2); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; }
+    footer { margin-top: 56px; border-top: 1px solid var(--border); padding: 22px 0 40px; color: var(--faint); font-size: 12.5px; }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="wrap topbar-inner">
+      <span class="label">Terminal Workbench</span>
+      <div class="topbar-links">
+        <a href="https://github.com/Real-Fruit-Snacks/terminal-workbench">GitHub</a>
+        <a href="https://github.com/Real-Fruit-Snacks/terminal-workbench/releases/latest">Releases</a>
+        <button class="toggle" id="mode-toggle" aria-label="Toggle color scheme">light mode</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="hero">
+      <h1><span class="prompt">$</span> terminal-workbench</h1>
+      <p class="tagline">
+        A modern terminal-inspired theme for Obsidian. Not retro green-on-black nostalgia —
+        a calm, dense, high-contrast working surface: graphite backgrounds, crisp typography,
+        restrained ANSI-style accents, and readable code in both dark and light modes.
+      </p>
+      <div class="btns">
+        <a class="btn btn-primary" href="https://github.com/Real-Fruit-Snacks/terminal-workbench#installation">Install</a>
+        <a class="btn btn-quiet" href="https://github.com/Real-Fruit-Snacks/terminal-workbench">View source</a>
+      </div>
+
+      <div class="window" aria-label="Preview of the theme inside Obsidian">
+        <div class="tabbar">
+          <div class="tabs">
+            <span class="tab">gym tracker</span>
+            <span class="tab active">web server</span>
+            <span class="tab-plus">+</span>
+          </div>
+          <span class="tab-plus">&#8943;</span>
+        </div>
+        <div class="crumbrow">
+          Pentesting<span class="sep">/</span>File Transfer<span class="sep">/</span>Python<span class="sep">/</span><span class="here">Web Server</span>
+        </div>
+        <div class="page">
+          <h2 class="h1">Web Server</h2>
+          <p>Spin up a quick file transfer endpoint, watch the logs, and keep
+            <span class="tag">#latency</span> and <span class="tag">#errors</span> in view during warmup.</p>
+          <div class="quote">The theme should feel like a serious terminal setup: crisp, fast, readable, and good at 2am.</div>
+          <div class="h2">Serve the directory</div>
+          <div class="codeblock">
+            <div class="codehead"><span class="glyph">&gt;_</span><span class="glyph">python</span></div>
+            <div class="codebody"><span class="kw">import</span> http.server<br>
+<br>
+<span class="pr">PORT</span> <span class="pn">=</span> <span class="vl">8000</span><br>
+handler <span class="pn">=</span> http.server.<span class="fn">SimpleHTTPRequestHandler</span><br>
+<span class="kw">with</span> socketserver.<span class="fn">TCPServer</span>((<span class="str">""</span>, <span class="pr">PORT</span>), handler) <span class="kw">as</span> httpd:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;httpd.<span class="fn">serve_forever</span>()</div>
+          </div>
+          <div class="h2">Checklist</div>
+          <ul class="tasks">
+            <li><span class="box"></span> Open command palette</li>
+            <li><span class="box done"></span> <span class="strike">Verify active task styling</span></li>
+            <li><span class="box cancel"></span> <span class="strike">Cancelled task</span></li>
+            <li><span class="box defer"></span> <span style="color: var(--accent-alt);">Deferred task</span></li>
+            <li><span class="box imp"></span> <span style="color: var(--warm); font-weight: 700;">Important task</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <span class="label">Palette</span>
+      <div class="swatches" id="swatches"></div>
+    </section>
+
+    <section class="block">
+      <span class="label">Features</span>
+      <div class="features">
+        <div class="feature"><div class="name">Two deliberate modes</div><p>Dark and light are separate palettes, not an inversion. Accents darken in light mode to hold contrast for small text.</p></div>
+        <div class="feature"><div class="name">Terminal manifest idiom</div><p>Monospace micro-labels unify properties, code block headers, tab titles, and breadcrumbs into one visual system.</p></div>
+        <div class="feature"><div class="name">Framed code blocks</div><p>A header band with language label and consistent framing in both editing and reading views.</p></div>
+        <div class="feature"><div class="name">Task states</div><p>Done, cancelled, deferred, and important tasks each get a distinct checkbox color driven by native Obsidian variables.</p></div>
+        <div class="feature"><div class="name">Respects your settings</div><p>Your accent color, fonts, and font size flow through the theme instead of being overridden.</p></div>
+        <div class="feature"><div class="name">Style Settings support</div><p>Accents per mode, fonts, line width, radius, compact mode, soft neon, and a terminal prompt marker.</p></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <span class="label">Install</span>
+      <ol class="steps">
+        <li>Open <code>Settings &gt; Appearance</code> in Obsidian.</li>
+        <li>Under <strong>Themes</strong>, select <strong>Manage</strong> and search for <code>Terminal Workbench</code> (once accepted into the community directory).</li>
+        <li>Or install manually: copy <code>theme.css</code> and <code>manifest.json</code> from the <a href="https://github.com/Real-Fruit-Snacks/terminal-workbench/releases/latest">latest release</a> into <code>.obsidian/themes/Terminal Workbench/</code>.</li>
+      </ol>
+    </section>
+
+    <footer>
+      MIT licensed. Built for Obsidian 1.5.0 and newer.
+      <a href="https://github.com/Real-Fruit-Snacks/terminal-workbench">Source on GitHub</a>.
+    </footer>
+  </div>
+
+  <script>
+    const tokens = [
+      ["accent", "#63f2ab", "#007a4d"], ["accent-alt", "#6bdcff", "#006f9e"],
+      ["warm", "#f0c674", "#a46600"], ["red", "#ff6e7a", "#c8324c"],
+      ["violet", "#b78cff", "#7357b8"], ["orange", "#f7a35c", "#b65800"],
+      ["bg-0", "#090c0d", "#f5f7f4"], ["bg-1", "#0e1214", "#edf2ee"],
+      ["bg-2", "#13191c", "#e2eae5"], ["bg-3", "#182024", "#d6e1db"],
+      ["border", "#2a363d", "#bfcbc5"], ["text", "#dce4df", "#17201d"]
+    ];
+    const root = document.documentElement;
+    const grid = document.getElementById("swatches");
+    function renderSwatches() {
+      const dark = root.getAttribute("data-theme") === "dark";
+      grid.innerHTML = tokens.map(([name, d, l]) => (
+        '<div class="swatch"><div class="chip" style="background:' + (dark ? d : l) + '"></div>' +
+        '<div class="meta"><div class="name">' + name + '</div>' +
+        '<div class="hex">' + (dark ? d : l) + '</div></div></div>'
+      )).join("");
+    }
+    const btn = document.getElementById("mode-toggle");
+    function setMode(mode) {
+      root.setAttribute("data-theme", mode);
+      btn.textContent = mode === "dark" ? "light mode" : "dark mode";
+      try { localStorage.setItem("tw-mode", mode); } catch (e) {}
+      renderSwatches();
+    }
+    btn.addEventListener("click", () => {
+      setMode(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
+    });
+    let saved = null;
+    try { saved = localStorage.getItem("tw-mode"); } catch (e) {}
+    setMode(saved === "light" || saved === "dark" ? saved : "dark");
+  </script>
+</body>
+</html>
