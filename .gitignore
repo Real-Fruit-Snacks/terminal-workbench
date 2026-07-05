@@ -1,6 +1,7 @@
 # Dev tooling and process artifacts — never ship these
 .claude/
 docs/preview.html
+docs/cover.html
 docs/superpowers/
 
 # OS / editor / build noise
