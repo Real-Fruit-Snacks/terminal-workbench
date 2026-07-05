@@ -1784,19 +1784,22 @@ body.ta-soft-neon .tree-item-self.is-active {
   box-shadow: inset 2px 0 0 var(--ta-accent), var(--ta-glow);
 }
 
-body.ta-colored-folders .nav-folder.mod-root > .nav-folder-children > .nav-folder > .nav-folder-title {
+/* Depth is counted with descendant combinators so wrapper elements inside
+   the (virtualized) tree cannot break the chain; deeper rules win on
+   specificity, and folders past level 4 keep the level-4 color. */
+body.ta-colored-folders .nav-folder.mod-root .nav-folder > .nav-folder-title {
   color: var(--ta-folder-1);
 }
 
-body.ta-colored-folders .nav-folder.mod-root > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-title {
+body.ta-colored-folders .nav-folder.mod-root .nav-folder .nav-folder > .nav-folder-title {
   color: var(--ta-folder-2);
 }
 
-body.ta-colored-folders .nav-folder.mod-root > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-title {
+body.ta-colored-folders .nav-folder.mod-root .nav-folder .nav-folder .nav-folder > .nav-folder-title {
   color: var(--ta-folder-3);
 }
 
-body.ta-colored-folders .nav-folder.mod-root > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-children > .nav-folder > .nav-folder-title {
+body.ta-colored-folders .nav-folder.mod-root .nav-folder .nav-folder .nav-folder .nav-folder > .nav-folder-title {
   color: var(--ta-folder-4);
 }
 
