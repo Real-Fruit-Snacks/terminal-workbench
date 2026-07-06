@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Terminal Workbench — an Obsidian theme</title>
   <meta name="description" content="A modern terminal-inspired Obsidian theme: graphite backgrounds, crisp typography, restrained ANSI-style accents, and readable code in dark and light modes.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#090c0d" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f5f7f4" media="(prefers-color-scheme: light)">
+  <script>
+    try {
+      var m = localStorage.getItem("tw-mode");
+      if (m === "light" || m === "dark") document.documentElement.setAttribute("data-theme", m);
+    } catch (e) {}
+  </script>
   <style>
     :root[data-theme="dark"] {
       --bg-0: #090c0d; --bg-1: #0e1214; --bg-2: #13191c; --bg-3: #182024;
@@ -107,6 +116,15 @@
     }
     .lightbox img { max-width: 96vw; max-height: 92vh; width: auto; height: auto; border-radius: 8px; box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5); }
     .lightbox[hidden] { display: none; }
+    .lightbox-close {
+      position: absolute; top: 18px; right: 22px;
+      width: 40px; height: 40px; border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08); color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-size: 22px; line-height: 1; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lightbox-close:hover { background: rgba(255, 255, 255, 0.16); }
     .tile .cap { padding: 14px 16px; }
     .tile .cap .name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
     .tile .cap p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6; }
@@ -164,8 +182,8 @@
       </div>
 
       <div class="shot" data-zoom>
-        <img class="is-dark" src="assets/hero-dark.png" alt="Terminal Workbench in dark mode — Obsidian with the file tree, tabs, breadcrumb, and a note open">
-        <img class="is-light" src="assets/hero-light.png" alt="Terminal Workbench in light mode — the same Obsidian note in the light palette">
+        <img class="is-dark" src="assets/hero-dark.png" width="1600" height="850" decoding="async" alt="Terminal Workbench in dark mode — Obsidian with the file tree, tabs, breadcrumb, and a note open">
+        <img class="is-light" src="assets/hero-light.png" width="1600" height="850" decoding="async" alt="Terminal Workbench in light mode — the same Obsidian note in the light palette">
       </div>
       <p class="shot-caption">The same vault in both palettes — use the <span class="mono">light mode</span> switch above to compare.</p>
     </section>
@@ -178,8 +196,8 @@
       <div class="gallery">
         <div class="tile wide">
           <div class="frame" data-zoom>
-            <img class="is-dark" src="assets/feature-callouts.png" alt="The full callout family: note, abstract, tip, info, warning, danger — each tinted from its own color">
-            <img class="is-light" src="assets/feature-callouts-light.png" alt="The full callout family in light mode">
+            <img class="is-dark" src="assets/feature-callouts.png" width="820" height="730" decoding="async" loading="lazy" alt="The full callout family: note, abstract, tip, info, warning, danger — each tinted from its own color">
+            <img class="is-light" src="assets/feature-callouts-light.png" width="820" height="730" decoding="async" loading="lazy" alt="The full callout family in light mode">
           </div>
           <div class="cap">
             <div class="name">Callouts</div>
@@ -189,8 +207,8 @@
 
         <div class="tile">
           <div class="frame" data-zoom>
-            <img class="is-dark" src="assets/feature-code.png" alt="Framed Python and JavaScript code blocks with header bands and language labels">
-            <img class="is-light" src="assets/feature-code-light.png" alt="Framed code blocks in light mode">
+            <img class="is-dark" src="assets/feature-code.png" width="820" height="530" decoding="async" loading="lazy" alt="Framed Python and JavaScript code blocks with header bands and language labels">
+            <img class="is-light" src="assets/feature-code-light.png" width="820" height="530" decoding="async" loading="lazy" alt="Framed code blocks in light mode">
           </div>
           <div class="cap">
             <div class="name">Code blocks</div>
@@ -200,8 +218,8 @@
 
         <div class="tile">
           <div class="frame" data-zoom>
-            <img class="is-dark" src="assets/feature-tasks.png" alt="Custom task states: todo, done, cancelled, deferred, and important with distinct checkbox colors">
-            <img class="is-light" src="assets/feature-tasks-light.png" alt="Custom task states in light mode">
+            <img class="is-dark" src="assets/feature-tasks.png" width="690" height="220" decoding="async" loading="lazy" alt="Custom task states: todo, done, cancelled, deferred, and important with distinct checkbox colors">
+            <img class="is-light" src="assets/feature-tasks-light.png" width="690" height="220" decoding="async" loading="lazy" alt="Custom task states in light mode">
           </div>
           <div class="cap">
             <div class="name">Task states</div>
@@ -211,8 +229,8 @@
 
         <div class="tile">
           <div class="frame" data-zoom>
-            <img class="is-dark" src="assets/feature-diagrams.png" alt="A Mermaid flowchart styled in the theme's palette">
-            <img class="is-light" src="assets/feature-diagrams-light.png" alt="A Mermaid flowchart in light mode">
+            <img class="is-dark" src="assets/feature-diagrams.png" width="820" height="190" decoding="async" loading="lazy" alt="A Mermaid flowchart styled in the theme's palette">
+            <img class="is-light" src="assets/feature-diagrams-light.png" width="820" height="190" decoding="async" loading="lazy" alt="A Mermaid flowchart in light mode">
           </div>
           <div class="cap">
             <div class="name">Diagrams</div>
@@ -222,8 +240,8 @@
 
         <div class="tile">
           <div class="frame" data-zoom>
-            <img class="is-dark" src="assets/feature-typography.png" alt="Heading hierarchy and a bordered table in the theme">
-            <img class="is-light" src="assets/feature-typography-light.png" alt="Heading hierarchy and table in light mode">
+            <img class="is-dark" src="assets/feature-typography.png" width="590" height="745" decoding="async" loading="lazy" alt="Heading hierarchy and a bordered table in the theme">
+            <img class="is-light" src="assets/feature-typography-light.png" width="590" height="745" decoding="async" loading="lazy" alt="Heading hierarchy and table in light mode">
           </div>
           <div class="cap">
             <div class="name">Typography &amp; tables</div>
@@ -243,7 +261,7 @@
     <section class="block">
       <span class="label">Features</span>
       <h2>Built to get out of the way</h2>
-      <p class="lead"></p>
+      <p class="lead">Opinionated where it counts, quiet everywhere else — and it composes with your existing Obsidian setup instead of fighting it.</p>
       <div class="features">
         <div class="feature"><div class="name">Terminal manifest idiom</div><p>Monospace micro-labels unify properties, code headers, tab titles, and breadcrumbs into one system.</p></div>
         <div class="feature"><div class="name">Colored folders</div><p>Optional folder coloring by nesting depth, with four configurable level colors and a file-name color.</p></div>
@@ -270,7 +288,8 @@
     </footer>
   </div>
 
-  <div class="lightbox" id="lightbox" hidden>
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Enlarged screenshot">
+    <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close">&times;</button>
     <img id="lightbox-img" src="" alt="Enlarged preview">
   </div>
 
@@ -309,19 +328,29 @@
 
     const lb = document.getElementById("lightbox");
     const lbImg = document.getElementById("lightbox-img");
+    const lbClose = document.getElementById("lightbox-close");
+    let lastFocused = null;
     function openLightbox(container) {
       const imgs = container.querySelectorAll("img");
       let pick = imgs[0];
       imgs.forEach(im => { if (im.offsetParent !== null) pick = im; });
       lbImg.src = pick.currentSrc || pick.src;
       lbImg.alt = pick.alt;
+      lastFocused = document.activeElement;
       lb.hidden = false;
+      lbClose.focus();
     }
-    function closeLightbox() { lb.hidden = true; lbImg.src = ""; }
+    function closeLightbox() {
+      lb.hidden = true;
+      lbImg.src = "";
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
     document.querySelectorAll("[data-zoom]").forEach(el => {
       el.addEventListener("click", () => openLightbox(el));
     });
-    lb.addEventListener("click", closeLightbox);
+    lbClose.addEventListener("click", closeLightbox);
+    // Close on backdrop click, but not when clicking the image itself.
+    lb.addEventListener("click", e => { if (e.target === lb) closeLightbox(); });
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) closeLightbox(); });
   </script>
 </body>
