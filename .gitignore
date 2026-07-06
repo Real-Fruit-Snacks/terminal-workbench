@@ -9,3 +9,6 @@ docs/superpowers/
 node_modules/
 *.log
 .obsidian/
+
+# Raw screenshot source material (processed crops live in docs/assets/)
+Screenshots/
