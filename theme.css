@@ -883,13 +883,17 @@ button.mod-cta:hover,
   line-height: var(--line-height-normal);
 }
 
-.markdown-source-view.mod-cm6 .cm-content,
+/* Constrain and center the editing/reading column even when Obsidian's
+   "Readable line length" is off. Obsidian only adds the centering margins
+   under .is-readable-line-width, so without this the forced max-width would
+   hug the left. Mirrors Obsidian's own mechanism (margins on the sizer). */
+.markdown-source-view.mod-cm6 .cm-sizer,
 .markdown-preview-view .markdown-preview-sizer {
   max-width: var(--file-line-width);
+  margin-inline: auto;
 }
 
-.markdown-source-view.mod-cm6.is-readable-line-width .cm-content,
-.markdown-preview-view.is-readable-line-width .markdown-preview-sizer {
+.markdown-source-view.mod-cm6 .cm-content {
   max-width: var(--file-line-width);
 }
 
