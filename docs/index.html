@@ -82,8 +82,9 @@
       box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
     }
     .shot img { display: block; width: 100%; height: auto; }
-    :root[data-theme="dark"] .hero-light { display: none; }
-    :root[data-theme="light"] .hero-dark { display: none; }
+    .shot { cursor: zoom-in; }
+    :root[data-theme="dark"] .is-light { display: none; }
+    :root[data-theme="light"] .is-dark { display: none; }
     .shot-caption {
       font-size: 12.5px; color: var(--faint); text-align: center;
       margin-top: 12px;
@@ -96,8 +97,16 @@
 
     .gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
     .tile { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--bg-1); }
-    .tile .frame { background: var(--bg-0); display: flex; align-items: center; justify-content: center; padding: 6px; }
+    .tile .frame { background: var(--bg-0); display: flex; align-items: center; justify-content: center; padding: 6px; cursor: zoom-in; }
     .tile img { display: block; width: 100%; height: auto; border-radius: 4px; }
+    .lightbox {
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(0, 0, 0, 0.82);
+      display: flex; align-items: center; justify-content: center;
+      padding: 32px; cursor: zoom-out;
+    }
+    .lightbox img { max-width: 96vw; max-height: 92vh; width: auto; height: auto; border-radius: 8px; box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5); }
+    .lightbox[hidden] { display: none; }
     .tile .cap { padding: 14px 16px; }
     .tile .cap .name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
     .tile .cap p { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6; }
@@ -154,9 +163,9 @@
         <a class="btn btn-quiet" href="https://github.com/Real-Fruit-Snacks/terminal-workbench">View source</a>
       </div>
 
-      <div class="shot">
-        <img class="hero-dark" src="assets/hero-dark.png" alt="Terminal Workbench in dark mode — Obsidian with the file tree, tabs, breadcrumb, and a note open">
-        <img class="hero-light" src="assets/hero-light.png" alt="Terminal Workbench in light mode — the same Obsidian note in the light palette">
+      <div class="shot" data-zoom>
+        <img class="is-dark" src="assets/hero-dark.png" alt="Terminal Workbench in dark mode — Obsidian with the file tree, tabs, breadcrumb, and a note open">
+        <img class="is-light" src="assets/hero-light.png" alt="Terminal Workbench in light mode — the same Obsidian note in the light palette">
       </div>
       <p class="shot-caption">The same vault in both palettes — use the <span class="mono">light mode</span> switch above to compare.</p>
     </section>
@@ -168,7 +177,10 @@
 
       <div class="gallery">
         <div class="tile wide">
-          <div class="frame"><img src="assets/feature-callouts.png" alt="The full callout family: note, abstract, tip, info, warning, danger — each tinted from its own color"></div>
+          <div class="frame" data-zoom>
+            <img class="is-dark" src="assets/feature-callouts.png" alt="The full callout family: note, abstract, tip, info, warning, danger — each tinted from its own color">
+            <img class="is-light" src="assets/feature-callouts-light.png" alt="The full callout family in light mode">
+          </div>
           <div class="cap">
             <div class="name">Callouts</div>
             <p>The whole family, each with a three-pixel top bar, a tinted fill, and the monospace manifest-label title. Unmapped types inherit the accent.</p>
@@ -176,7 +188,10 @@
         </div>
 
         <div class="tile">
-          <div class="frame"><img src="assets/feature-code.png" alt="Framed Python and JavaScript code blocks with header bands and language labels"></div>
+          <div class="frame" data-zoom>
+            <img class="is-dark" src="assets/feature-code.png" alt="Framed Python and JavaScript code blocks with header bands and language labels">
+            <img class="is-light" src="assets/feature-code-light.png" alt="Framed code blocks in light mode">
+          </div>
           <div class="cap">
             <div class="name">Code blocks</div>
             <p>A header band with a language label, framed consistently across editing and reading views.</p>
@@ -184,7 +199,10 @@
         </div>
 
         <div class="tile">
-          <div class="frame"><img src="assets/feature-tasks.png" alt="Custom task states: todo, done, cancelled, deferred, and important with distinct checkbox colors"></div>
+          <div class="frame" data-zoom>
+            <img class="is-dark" src="assets/feature-tasks.png" alt="Custom task states: todo, done, cancelled, deferred, and important with distinct checkbox colors">
+            <img class="is-light" src="assets/feature-tasks-light.png" alt="Custom task states in light mode">
+          </div>
           <div class="cap">
             <div class="name">Task states</div>
             <p>Done, cancelled, deferred, and important each get a distinct checkbox color and text treatment.</p>
@@ -192,7 +210,10 @@
         </div>
 
         <div class="tile">
-          <div class="frame"><img src="assets/feature-diagrams.png" alt="A Mermaid flowchart styled in the theme's palette"></div>
+          <div class="frame" data-zoom>
+            <img class="is-dark" src="assets/feature-diagrams.png" alt="A Mermaid flowchart styled in the theme's palette">
+            <img class="is-light" src="assets/feature-diagrams-light.png" alt="A Mermaid flowchart in light mode">
+          </div>
           <div class="cap">
             <div class="name">Diagrams</div>
             <p>Mermaid flowchart, state, sequence, and class diagrams recolored to the theme palette.</p>
@@ -200,7 +221,10 @@
         </div>
 
         <div class="tile">
-          <div class="frame"><img src="assets/feature-typography.png" alt="Heading hierarchy and a bordered table in the theme"></div>
+          <div class="frame" data-zoom>
+            <img class="is-dark" src="assets/feature-typography.png" alt="Heading hierarchy and a bordered table in the theme">
+            <img class="is-light" src="assets/feature-typography-light.png" alt="Heading hierarchy and table in light mode">
+          </div>
           <div class="cap">
             <div class="name">Typography &amp; tables</div>
             <p>A colored heading hierarchy, hairline-framed tables, and prose tuned for long reading sessions.</p>
@@ -246,6 +270,10 @@
     </footer>
   </div>
 
+  <div class="lightbox" id="lightbox" hidden>
+    <img id="lightbox-img" src="" alt="Enlarged preview">
+  </div>
+
   <script>
     const tokens = [
       ["accent", "#63f2ab", "#007a4d"], ["accent-alt", "#6bdcff", "#006f9e"],
@@ -278,6 +306,23 @@
     let saved = null;
     try { saved = localStorage.getItem("tw-mode"); } catch (e) {}
     setMode(saved === "light" || saved === "dark" ? saved : "dark");
+
+    const lb = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lightbox-img");
+    function openLightbox(container) {
+      const imgs = container.querySelectorAll("img");
+      let pick = imgs[0];
+      imgs.forEach(im => { if (im.offsetParent !== null) pick = im; });
+      lbImg.src = pick.currentSrc || pick.src;
+      lbImg.alt = pick.alt;
+      lb.hidden = false;
+    }
+    function closeLightbox() { lb.hidden = true; lbImg.src = ""; }
+    document.querySelectorAll("[data-zoom]").forEach(el => {
+      el.addEventListener("click", () => openLightbox(el));
+    });
+    lb.addEventListener("click", closeLightbox);
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) closeLightbox(); });
   </script>
 </body>
 </html>
