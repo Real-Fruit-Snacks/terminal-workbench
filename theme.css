@@ -87,33 +87,45 @@ settings:
     level: 1
   - id: ta-colored-folders
     title: Colored folders
-    description: Colors folder names by nesting depth using the four folder colors below (first four levels).
+    description: Gives each top-level folder its own color from the six below, cycled by order; every subfolder and note inside inherits its top folder's color.
     type: class-toggle
     default: false
   - id: ta-folder-1
-    title: Folder color (level 1)
+    title: Folder color 1
     type: variable-themed-color
     format: hex
     default-light: '#007a4d'
     default-dark: '#63f2ab'
   - id: ta-folder-2
-    title: Folder color (level 2)
+    title: Folder color 2
     type: variable-themed-color
     format: hex
     default-light: '#006f9e'
     default-dark: '#6bdcff'
   - id: ta-folder-3
-    title: Folder color (level 3)
+    title: Folder color 3
     type: variable-themed-color
     format: hex
     default-light: '#a46600'
     default-dark: '#f0c674'
   - id: ta-folder-4
-    title: Folder color (level 4)
+    title: Folder color 4
     type: variable-themed-color
     format: hex
     default-light: '#7357b8'
     default-dark: '#b78cff'
+  - id: ta-folder-5
+    title: Folder color 5
+    type: variable-themed-color
+    format: hex
+    default-light: '#b65800'
+    default-dark: '#f7a35c'
+  - id: ta-folder-6
+    title: Folder color 6
+    type: variable-themed-color
+    format: hex
+    default-light: '#c8324c'
+    default-dark: '#ff6e7a'
   - id: ta-file-color
     title: File name color
     type: variable-themed-color
@@ -523,6 +535,8 @@ body {
   --ta-folder-2: var(--ta-accent-alt);
   --ta-folder-3: var(--ta-warm);
   --ta-folder-4: var(--ta-violet);
+  --ta-folder-5: var(--ta-orange);
+  --ta-folder-6: var(--ta-red);
   --ta-file-color: var(--nav-item-color);
   --ta-font-editor: "Berkeley Mono", "JetBrains Mono", "Cascadia Code", "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
   --ta-font-ui: "Inter", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
@@ -2127,25 +2141,29 @@ body.ta-soft-neon .tree-item-self.is-active {
   box-shadow: inset 2px 0 0 var(--ta-accent), var(--ta-glow);
 }
 
-/* The file explorer has no .mod-root folder element; .nav-files-container is
-   the tree root (per app DOM). Depth is counted with descendant combinators
-   so wrappers cannot break the chain; deeper rules win on specificity, and
-   folders past level 4 keep the level-4 color. */
-body.ta-colored-folders .nav-files-container .nav-folder > .nav-folder-title {
-  color: var(--ta-folder-1);
-}
+/* Colored folders — modeled on the Terminal Workbench site, where a folder and
+   everything inside it share one color drawn from the palette. Each TOP-LEVEL
+   folder is assigned one of six colors, cycled by its order among sibling
+   folders, and hands that color down to its whole subtree via a cascading
+   custom property (--ta-fc). Notes:
+   - `:nth-child(6n+k of .nav-folder)` counts only folders, so loose files and
+     the file tree's virtualization spacer never shift the cycle.
+   - `:not(.nav-folder .nav-folder)` restricts the assignment to top-level
+     folders; nested folders don't re-assign --ta-fc, so they inherit instead.
+   - Titles remap --nav-item-color (not `color`), leaving hover/active states,
+     which use their own variables, untouched.
+   Obsidian sorts folders alphabetically, so the colors are stable in practice;
+   a pure-CSS theme can key off order but not the folder name itself. */
+body.ta-colored-folders .nav-files-container { --ta-fc: var(--nav-item-color); }
 
-body.ta-colored-folders .nav-files-container .nav-folder .nav-folder > .nav-folder-title {
-  color: var(--ta-folder-2);
-}
+body.ta-colored-folders .nav-folder:not(.nav-folder .nav-folder):nth-child(6n+1 of .nav-folder) { --ta-fc: var(--ta-folder-1); }
+body.ta-colored-folders .nav-folder:not(.nav-folder .nav-folder):nth-child(6n+2 of .nav-folder) { --ta-fc: var(--ta-folder-2); }
+body.ta-colored-folders .nav-folder:not(.nav-folder .nav-folder):nth-child(6n+3 of .nav-folder) { --ta-fc: var(--ta-folder-3); }
+body.ta-colored-folders .nav-folder:not(.nav-folder .nav-folder):nth-child(6n+4 of .nav-folder) { --ta-fc: var(--ta-folder-4); }
+body.ta-colored-folders .nav-folder:not(.nav-folder .nav-folder):nth-child(6n+5 of .nav-folder) { --ta-fc: var(--ta-folder-5); }
+body.ta-colored-folders .nav-folder:not(.nav-folder .nav-folder):nth-child(6n+6 of .nav-folder) { --ta-fc: var(--ta-folder-6); }
 
-body.ta-colored-folders .nav-files-container .nav-folder .nav-folder .nav-folder > .nav-folder-title {
-  color: var(--ta-folder-3);
-}
-
-body.ta-colored-folders .nav-files-container .nav-folder .nav-folder .nav-folder .nav-folder > .nav-folder-title {
-  color: var(--ta-folder-4);
-}
+body.ta-colored-folders .nav-folder-title { --nav-item-color: var(--ta-fc); }
 
 body.ta-plain-headings .markdown-rendered h2,
 body.ta-plain-headings .HyperMD-header-2,
