@@ -55,7 +55,7 @@ Terminal Workbench includes settings for the [Style Settings](https://github.com
 
 - Primary, secondary, and warm accent colors, configurable separately for light and dark mode
 - Editor, UI, and code fonts, editor line width, UI corner radius, and text line height
-- Colored folders by nesting depth (four configurable levels) and a file name color
+- Per-folder coloring: each top-level folder takes one of six palette colors and passes it down to everything inside; all six colors and a file name color are configurable
 - Per-type callout colors, chosen from the theme palette (every callout type, dark and light)
 - Compact workspace mode, soft neon highlights, and an active-line terminal prompt marker
 - Tag shape (square or pill)
