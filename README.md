@@ -24,9 +24,7 @@ The design goal is not retro green-on-black nostalgia. It is a calm, dense, high
 
 ## Installation
 
-### Community themes
-
-Once available in the community directory:
+### Community themes (recommended)
 
 1. Open `Settings > Appearance`.
 2. Under **Themes**, select **Manage**.
