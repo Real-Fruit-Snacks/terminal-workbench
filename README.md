@@ -4,6 +4,8 @@
 [![License: MIT](https://img.shields.io/github/license/Real-Fruit-Snacks/terminal-workbench?color=2a9d6e)](LICENSE)
 [![Obsidian](https://img.shields.io/badge/obsidian-1.5.0%2B-483699)](https://obsidian.md)
 
+Part of the [Terminal Workbench family](https://github.com/Real-Fruit-Snacks/terminal-workbench-suite) — one repo with the design spec, CSS tokens, every port, and the official monospace font.
+
 A modern terminal-inspired theme for [Obsidian](https://obsidian.md), built for people who spend the day in panes, shells, logs, editors, and command palettes.
 
 The design goal is not retro green-on-black nostalgia. It is a calm, dense, high-contrast working surface: graphite backgrounds, crisp typography, restrained ANSI-style accents, readable code, and pane chrome that feels close to a modern terminal without turning your notes into a novelty skin.
